@@ -1,44 +1,40 @@
-//TODO: PUT REPEATING CODE IN ONE FUNCTION
-
+//Takes a string to be encoded and a shift factor and then returns the encoded string
 const caesar = function(str, shift) {
-    let cipherText = '';
+    let cipherText = '';        // Represents the final encryped text
    
     // loop through each character in the string
     for(let i = 0; i < str.length; i++){
         let charCode = str.charCodeAt(i);   //get unicode value of each character
-        
+        let encryptedChar;                  //represents the character after it has been encrypted
+
         if(charCode >= 65 && charCode <= 90){
-            let shiftedCharCode = shiftCapitalLetters(charCode, shift);
-            let shiftedChar = String.fromCharCode(shiftedCharCode); //convert the code back to a string
-            cipherText += shiftedChar;  //append the charcater to the cipher text
+            let shiftedCharCode = shiftString(65, charCode, shift);
+            encryptedChar = String.fromCharCode(shiftedCharCode); //convert char code back to a string   
         }
         else if(charCode >= 97 && charCode <= 122){
-            let shiftedCharCode = shiftLowercaseLetters(charCode, shift);
-            let shiftedChar = String.fromCharCode(shiftedCharCode); //char code to string
-            cipherText += shiftedChar;  //append it to the cipher text
+            let shiftedCharCode = shiftString(97, charCode, shift);
+            encryptedChar = String.fromCharCode(shiftedCharCode);
         }
-        // if it is any character besides a letter, append it to cipherText
+        // if it is any character besides a letter, do not make any changes
         else
-            cipherText += str[i];
+            encryptedChar = str[i];
+
+        cipherText += encryptedChar;  //append the encrypted character to the cipher text
     }
 
     return cipherText;
 };
 
-// Wrap shifting between char codes 65 - 90
-function shiftCapitalLetters(charCode, shift){
+// Shifts a string and returns a char code
+function shiftString(start, charCode, shift){
+    
+    // If the shift is negative add 26 to make it positive. (26 letters in the alphabet)
     if(shift < 0)
         shift += 26;
-    charCode = 65 + (charCode+ shift - 65) % (90 - 64);
-    return charCode;
-}
-
-// Wrap shifting between char codes  97 - 122
-function shiftLowercaseLetters(charCode, shift){
-    if(shift < 0)
-        shift += 26;
-    charCode = 97 + (charCode + shift - 97) % (122 - 96);
-    return charCode;
+    
+    // Wraps around the alphabet at a given range to get the encrypted char code
+    charCode = start + (charCode + shift - start) % (26);
+    return charCode;     //returns the new char code
 }
 
 module.exports = caesar;

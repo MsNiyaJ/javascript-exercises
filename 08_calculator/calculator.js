@@ -6,20 +6,14 @@ const subtract = function(num1, num2) {
 	return num1 - num2;
 };
 
+//Used reduce to calculate the the sum of the array, total = 0
 const sum = function(arr) {
-  let sum = 0;
-  arr.forEach(element => {
-    sum += element;
-  });
-  return sum;
-};
+  return arr.reduce((total, current) => total + current, 0);
+}
 
+//Used reduce to multiply all values in the array, total = 1
 const multiply = function(arr) {
-  let ans = 1;
-  arr.forEach(element => {
-    ans *= element;
-  });
-  return ans;
+  return arr.reduce((total, current) => total * current, 1);
 };
 
 const power = function(num1, num2) {
